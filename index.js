@@ -8,6 +8,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// shoesdb
+// xj1EnHywFfmz14yC
+
 
 app.get('/',(req,res)=>{
     res.send('Running Comfort Server');
