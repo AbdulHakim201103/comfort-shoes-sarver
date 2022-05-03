@@ -32,19 +32,20 @@ async function run(){
             const shoe =await shoesCollection.findOne(query);
             res.send(shoe);
         });
+        
         app.put('/inventory/:id',async(req,res)=>{
             const id = req.params.id;
-            const quantityUpdate =req.body;
-            const filter ={_id:ObjectId(id)};
-            const options ={upsert: true}; 
-            const updatedStock ={
-                $set: {
-                    quantity : quantityUpdate.quantity
+            const update = req.body;
+            const filter = {_id:ObjectId(id)};
+            const option = {upsert: true};
+            const updateDoc = {
+                $set:{
+                    quantity: update.quantity
                 }
-            };
-            const shoe =await shoesCollection.updateOne(filter,updatedStock,options);
-            res.send(shoe);
-        });
+            }
+            const result = await shoesCollection.updateOne(filter,updateDoc,option);
+            res.send(result);
+        })
 
 
     }
