@@ -39,7 +39,7 @@ async function run(){
             const options ={upsert: true}; 
             const updatedStock ={
                 $set: {
-                    stock : quantityUpdate.stock
+                    quantity : quantityUpdate.quantity
                 }
             };
             const shoe =await shoesCollection.updateOne(filter,updatedStock,options);
