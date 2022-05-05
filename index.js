@@ -22,24 +22,18 @@ async function run(){
         app.get('/inventory',async(req,res)=>{
             const query ={};
             const cursor = shoesCollection.find(query);
-            const shoes = await cursor.toArray();
-            res.send(shoes);
+            const result = await cursor.toArray();
+            res.send(result);
         });
-
-        app.get('/inventory/:id',async(req,res)=>{
-            const id = req.params._id;
-            const query ={_id:ObjectId(id)};
-            const shoe =await shoesCollection.findOne(query);
-            res.send(shoe);
-        });
-        
 
         app.delete('/inventory/:id',async(req,res)=>{
-            const id = req.params.id;
-            const query = {_id:ObjectId(id)};
+
+            const id =req.params.id;
+            const query ={_id: ObjectId(id)};
             const result = await shoesCollection.deleteOne(query);
             res.send(result);
-        })
+        });
+
 
 
     }
