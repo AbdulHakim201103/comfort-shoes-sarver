@@ -27,25 +27,12 @@ async function run(){
         });
 
         app.get('/inventory/:id',async(req,res)=>{
-            const id = req.params.id;
+            const id = req.params._id;
             const query ={_id:ObjectId(id)};
             const shoe =await shoesCollection.findOne(query);
             res.send(shoe);
         });
         
-        app.put('/inventory/:id',async(req,res)=>{
-            const id = req.params.id;
-            const update = req.body;
-            const filter = {_id:ObjectId(id)};
-            const option = {upset: true};
-            const updateDoc = {
-                $set:{
-                    quantity: update.quantity
-                }
-            }
-            const result = await shoesCollection.updateOne(filter,updateDoc,option);
-            res.send(result);
-        })
 
         app.delete('/inventory/:id',async(req,res)=>{
             const id = req.params.id;
