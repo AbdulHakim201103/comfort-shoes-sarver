@@ -27,10 +27,19 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    app.get("/inventory/:id", async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const result = await shoesCollection.findOne(query);
+        res.send(result);
+      });
+
 
     app.post("/product", async (req, res) => {
-      console.log("req", req.body);
-      res.send("success");
+      const product = req.body;
+      product.id = inventory.length + 1;
+      inventory.push(product)
+      res.send(product);
     });
 
     app.delete("/inventory/:id", async (req, res) => {
