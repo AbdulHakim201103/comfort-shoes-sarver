@@ -36,9 +36,8 @@ async function run() {
 
     app.post("/product", async (req, res) => {
       const product = req.body;
-      product.id = inventory.length + 1;
-      inventory.push(product);
-      res.send(product);
+      const result = await shoesCollection.insertOne(product);
+      res.send(result);
     });
     // update
     app.put("/inventory/:id", async (req, res) => {
