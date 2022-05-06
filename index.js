@@ -40,7 +40,7 @@ async function run() {
       inventory.push(product);
       res.send(product);
     });
-
+    // update
     app.put("/inventory/:id", async (req, res) => {
       const quantity = req.body.totalQuantity;
       const sold = req.body.totalSold;
@@ -66,7 +66,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Running Comfort Server");
+  res.send("Running Comfort Server update");
 });
 
 app.listen(port, () => {
