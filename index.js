@@ -28,18 +28,30 @@ async function run() {
       res.send(result);
     });
     app.get("/inventory/:id", async (req, res) => {
-        const id = req.params.id;
-        const query = { _id: ObjectId(id) };
-        const result = await shoesCollection.findOne(query);
-        res.send(result);
-      });
-
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await shoesCollection.findOne(query);
+      res.send(result);
+    });
 
     app.post("/product", async (req, res) => {
       const product = req.body;
       product.id = inventory.length + 1;
-      inventory.push(product)
+      inventory.push(product);
       res.send(product);
+    });
+
+    app.put("/inventory/:id", async (req, res) => {
+      const quantity = req.body.totalQuantity;
+      const sold = req.body.totalSold;
+      const id = req.body.id;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: { quantity: quantity, sold: sold },
+      };
+      const result = await shoesCollection.updateOne(filter, updateDoc, options);
+      res.send(result);
     });
 
     app.delete("/inventory/:id", async (req, res) => {
