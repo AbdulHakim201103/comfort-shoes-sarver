@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
@@ -21,6 +22,14 @@ async function run() {
     await client.connect();
     const shoesCollection = client.db("comfortShoes").collection("shoes");
 
+    app.post("/login", async (req, res) => {
+      const user = req.body;
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN - SECRET, {
+        expiresIn: "1d",
+      });
+      res.send({ accessToken });
+    });
+
     app.get("/inventory", async (req, res) => {
       const query = {};
       const cursor = shoesCollection.find(query);
@@ -35,13 +44,14 @@ async function run() {
     });
 
     app.post("/product", async (req, res) => {
-      const product = req.body;
+      const product = req.body.data;
       const result = await shoesCollection.insertOne(product);
       res.send(result);
     });
     // get product
     app.get("/product", async (req, res) => {
       const email = req.query.email;
+      console.log(email);
       const query = { email: email };
       const cursor = shoesCollection.find(query);
       const result = await cursor.toArray();
