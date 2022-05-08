@@ -21,7 +21,6 @@ async function run() {
     await client.connect();
     const shoesCollection = client.db("comfortShoes").collection("shoes");
 
-
     app.get("/inventory", async (req, res) => {
       const query = {};
       const cursor = shoesCollection.find(query);
