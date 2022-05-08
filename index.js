@@ -1,12 +1,17 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-require("dotenv").config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 const app = express();
 
 // middleware
-app.use(cors());
+const corsConfig = {
+  origin: true,
+  credentials: true,
+};
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qxjco.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -36,18 +41,19 @@ async function run() {
       res.send(result);
     });
 
-
     // add product
     app.post("/product", async (req, res) => {
       const product = req.body.data;
       const result = await shoesCollection.insertOne(product);
+      console.log(result);
       res.send(result);
     });
 
     // get product
     app.get("/product", async (req, res) => {
       const email = req.query.email;
-      console.log(email);
+      console.log("Abdul hakim");
+      // console.log(email);
       const query = { email: email };
       const cursor = shoesCollection.find(query);
       const result = await cursor.toArray();
@@ -75,7 +81,6 @@ async function run() {
       res.send(result);
     });
   } finally {
-    
   }
 }
 run().catch(console.dir);
