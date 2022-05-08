@@ -27,6 +27,8 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    //  findOne
     app.get("/inventory/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
