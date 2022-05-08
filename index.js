@@ -43,6 +43,7 @@ async function run() {
       const result = await shoesCollection.insertOne(product);
       res.send(result);
     });
+
     // get product
     app.get("/product", async (req, res) => {
       const email = req.query.email;
@@ -52,6 +53,7 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
     // update
     app.put("/inventory/:id", async (req, res) => {
       const quantity = req.body.totalQuantity;
@@ -73,6 +75,7 @@ async function run() {
       res.send(result);
     });
   } finally {
+    
   }
 }
 run().catch(console.dir);
