@@ -36,6 +36,8 @@ async function run() {
       res.send(result);
     });
 
+
+    // add product
     app.post("/product", async (req, res) => {
       const product = req.body.data;
       const result = await shoesCollection.insertOne(product);
