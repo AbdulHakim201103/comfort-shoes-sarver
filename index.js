@@ -52,8 +52,6 @@ async function run() {
     // get product
     app.get("/product", async (req, res) => {
       const email = req.query.email;
-      console.log("Abdul hakim");
-      // console.log(email);
       const query = { email: email };
       const cursor = shoesCollection.find(query);
       const result = await cursor.toArray();
@@ -73,9 +71,11 @@ async function run() {
       const result = await shoesCollection.updateOne(filter, updateDoc, options);
       res.send(result);
     });
-
+    
+    // delete
     app.delete("/inventory/:id", async (req, res) => {
       const id = req.params.id;
+      console.log(id);
       const query = { _id: ObjectId(id) };
       const result = await shoesCollection.deleteOne(query);
       res.send(result);
